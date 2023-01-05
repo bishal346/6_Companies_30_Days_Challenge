@@ -1,0 +1,35 @@
+class Solution {
+    public int evalRPN(String[] tockens) {
+        //System.out.println(Integer.parseInt("-12") instanceof int);
+        Stack<Integer> stack = new Stack<>();
+        int a = 0, b = 0;
+        for(int i = 0; i<tockens.length; i++) {
+            //if(tockens[i].compareTo("-")==0||tockens[i].compareTo("/")==0||tockens[i].compareTo("+")==0||tockens[i].compareTo("*")==0) {
+                if(tockens[i].compareTo("-")==0) {
+                    b = stack.pop();
+                    a = stack.pop();
+                    stack.push(a-b);
+                }
+                else if(tockens[i].compareTo("/")==0) {
+                    b = stack.pop();
+                    a = stack.pop();
+                    stack.push((int)a/b);
+                }
+                else if(tockens[i].compareTo("+")==0) {
+                    b = stack.pop();
+                    a = stack.pop();
+                    stack.push(a+b);
+                }
+                else if(tockens[i].compareTo("*")==0) {
+                    b = stack.pop();
+                    a = stack.pop();
+                    stack.push(a*b);
+                }
+            //}
+            else {
+                stack.push(Integer.parseInt(tockens[i]));
+            }
+        }
+        return stack.pop();
+    }
+}

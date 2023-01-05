@@ -1,0 +1,49 @@
+class Solution {
+    public int countPaths(int n, int[][] roads) {
+        HashMap<Integer,Integer> graph[] = new HashMap[n]; 
+        for(int i = 0; i<n; i++) {
+            graph[i] = new HashMap<>(); 
+        }
+        for(int grr[] : roads) {
+            graph[grr[0]].put(grr[1],grr[2]); 
+            graph[grr[1]].put(grr[0],grr[2]); 
+        }
+        int dist[] = new int[n]; 
+        long dp[] = new long[n]; 
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dp[0] = 1; 
+        dist[0] = 0; 
+        PriorityQueue<int []> queue = new PriorityQueue<>((a, b) -> (a[1] - b[1]));
+        int xrr[] = {0,0}; 
+        queue.add(xrr); 
+        int a = 0, b = 0, d = 0; 
+        // for(int i = 0; i<n; i++) {
+        //     System.out.println(dist[i]+" "+graph[i]); 
+        // }
+        while(queue.size()!=0) {
+            xrr = queue.poll(); 
+            a = xrr[0]; b = xrr[1]; 
+            //System.out.println(a+" "+b+" "+dist[a]); 
+            if(dist[a]<b) {
+                continue; 
+            }
+            // System.out.println(a+" "+b); 
+            for(int x : graph[a].keySet()) {
+                d = b + graph[a].get(x); 
+                if(d<dist[x]) {
+                    dist[x] = d; 
+                    dp[x] = dp[a]; 
+                    queue.offer(new int[]{x,d}); 
+                }
+                else if(d==dist[x]) {
+                    dp[x] += dp[a]; 
+                }
+                dp[x]%=1000000007; 
+            }
+        }
+        // for(int i = 0; i<n; i++) {
+        //     System.out.println(dist[i]+" "+graph[i]); 
+        // }
+        return (int)dp[n-1]; 
+    }
+}

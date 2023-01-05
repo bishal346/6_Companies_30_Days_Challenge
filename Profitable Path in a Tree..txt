@@ -1,0 +1,93 @@
+class Solution {
+    public int mostProfitablePath(int[][] arr, int bob, int[] amt) {
+        HashMap<Integer,ArrayList<Integer>> map = new HashMap<>(); 
+        int n = amt.length; 
+        for(int brr[] : arr) {
+            if(!map.containsKey(brr[0])) {
+                map.put(brr[0], new ArrayList<>()); 
+            }
+            if(!map.containsKey(brr[1])) {
+                map.put(brr[1], new ArrayList<>()); 
+            }
+            map.get(brr[0]).add(brr[1]); 
+            map.get(brr[1]).add(brr[0]); 
+        }
+        int brr[] = new int[n]; 
+        int level[] = new int[n]; 
+        int par[] = new int[n]; 
+        par[0] = -1; 
+        brr[0] = 1; 
+        ArrayList<Integer> list = new ArrayList<>(); 
+        list.add(0); 
+        n = 1; int c = 0; 
+        int bis = 0; 
+        int d = 0; 
+        //ArrayList<Integer> leaf = new ArrayList<>(); 
+        while(n!=0) {
+            c++; 
+            d = 0; 
+            for(int i = 0; i<n; i++) {
+                bis = list.get(0); 
+                for(int x : map.get(bis)) {
+                    if(brr[x]==1) {
+                        continue; 
+                    }
+                    list.add(x); 
+                    level[x] = c; 
+                    par[x] = bis; 
+                    d++; 
+                    //leaf.add(x); 
+                }
+                list.remove(0); 
+                brr[bis] = 1; 
+            }
+            n = d; 
+        }
+        n = amt.length; 
+        int leaf[] = new int[n]; 
+        for(int a : par) {
+            if(a==-1) {
+                continue; 
+            }
+            leaf[a]++; 
+        }
+        bis = bob; 
+        c = 0; 
+        while(bis!=0) {
+            if(c<level[bis]) {
+                amt[bis] = 0; 
+            }
+            else if(c==level[bis]) {
+                amt[bis]/=2; 
+            }
+            else {
+                break; 
+            }
+            bis = par[bis]; 
+            c++; 
+        }
+        int max = Integer.MIN_VALUE; 
+        for(int i = n-1; i>=0; i--) {
+            if(leaf[i]!=0) {
+                continue; 
+            }
+            bis = i; 
+            c = 0; 
+            while(bis!=-1) {
+                c+=amt[bis]; 
+                bis = par[bis]; 
+            }
+            max = Math.max(max,c); 
+        }
+        return max; 
+    }
+}
+
+/*int n = amt.length; 
+        int brr[] = new int[n]; 
+        for(int i = 0; i<n; i++) {
+            brr[i] = -1; 
+        }
+        for(int xrr[] : arr) {
+            brr[xrr[1]] = xrr[0]; 
+        }*/ 

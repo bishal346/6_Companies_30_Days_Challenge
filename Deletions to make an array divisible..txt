@@ -1,0 +1,28 @@
+class Solution { 
+    public int gcd(int a, int b) 
+    {
+        if (a == 0)
+            return b;
+
+        return gcd(b % a, a);
+    }
+    public int minOperations(int[] arr, int[] nD) {
+        int gd = nD[0]; 
+        for(int a : nD) {
+            gd = gcd(gd,a); 
+            if(gd==1)
+                break; 
+        }
+        Arrays.sort(arr); 
+        if(arr[0]>gd)
+            return -1; 
+        int c = 0; 
+        for(int a : arr) {
+            if(gd%a==0) {
+                break; 
+            }
+            c++; 
+        }
+        return c==arr.length?-1:c; 
+    }
+}
