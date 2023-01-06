@@ -1,0 +1,44 @@
+class Solution {
+    public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+        long arr[][] = new long[4][2]; 
+        if((p1[0]==p2[0]&&p1[1]==p2[1])||(p1[0]==p3[0]&&p1[1]==p3[1])||(p1[0]==p4[0]&&p1[1]==p4[1])||(p2[0]==p3[0]&&p2[1]==p3[1])||(p2[0]==p4[0]&&p2[1]==p4[1])||(p3[0]==p4[0]&&p3[1]==p4[1])) {
+            return false; 
+        }
+        arr[0][0] = (long)p1[0]; arr[0][1] = (long)p1[1]; 
+        arr[1][0] = (long)p2[0]; arr[1][1] = (long)p2[1]; 
+        arr[2][0] = (long)p3[0]; arr[2][1] = (long)p3[1]; 
+        arr[3][0] = (long)p4[0]; arr[3][1] = (long)p4[1]; 
+        long brr[][] = new long[4][4]; 
+        HashMap<Long, Integer> set = new HashMap<>(); 
+        long a = 0; 
+        for(int i = 0; i<4; i++) {
+            for(int j = i+1; j<4; j++) {
+                a = (long)Math.pow(arr[i][0]-arr[j][0],2) + (long)Math.pow(arr[i][1]-arr[j][1],2); 
+                if(brr[i][j]!=0&&brr[i][j]!=a) {
+                    return false; 
+                }
+                brr[i][j] = a; 
+                if(!set.containsKey(a)) {
+                    set.put(a,1); 
+                }
+                else {
+                    set.replace(a,set.get(a)+1); 
+                }
+                //set.add(a); 
+            }
+        }
+        if(set.size()!=2) {
+            return false; 
+        }
+        long x = 0, y = 0; 
+        for(long b : set.keySet()) {
+            if(x==0) {
+                x = b; 
+            }
+            else {
+                y = b; 
+            }
+        }
+        return (set.get(x)==4&&set.get(y)==2)||(set.get(y)==4&&set.get(x)==2); 
+    }
+}

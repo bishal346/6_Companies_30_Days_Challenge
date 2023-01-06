@@ -1,0 +1,22 @@
+class Solution {
+    public int minimumCardPickup(int[] arr) {
+        HashMap<Integer,ArrayList<Integer>> map = new HashMap<>(); 
+        int max = Integer.MAX_VALUE; 
+        int n = arr.length; 
+        for(int i = 0; i<n; i++) {
+            if(!map.containsKey(arr[i])) {
+                map.put(arr[i],new ArrayList<>()); 
+            }
+            map.get(arr[i]).add(i); 
+        }
+        if(n==map.size()) {
+            return -1; 
+        } 
+        for(int a : map.keySet()) {
+            for(int j = 0; j<map.get(a).size()-1; j++) {
+                max = Math.min(max,((map.get(a).get(j+1)-map.get(a).get(j))+1)); 
+            }
+        }
+        return max; 
+    }
+}

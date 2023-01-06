@@ -1,0 +1,31 @@
+class Solution {
+    public int countNicePairs(int[] arr) {
+        int b = 0, c = 0; 
+        int n = arr.length; 
+        HashMap<Integer,Integer> map = new HashMap<>(); 
+        for(int i = 0; i<n; i++) {
+            b = arr[i]; 
+            c = 0; 
+            while(b!=0) {
+                c = (c*10) + (b%10); 
+                b/=10; 
+            }
+            arr[i]-=c; 
+            if(!map.containsKey(arr[i])) {
+                map.put(arr[i],1); 
+            }
+            else {
+                map.replace(arr[i],map.get(arr[i])+1); 
+            }
+        }
+        long d = 0; 
+        // System.out.println(map); 
+        // int bis = map.get(0)*map.get(0); 
+        // System.out.println(bis); 
+        for(int a : map.keySet()) {
+            d+=((long)map.get(a)*(long)(map.get(a)-1))/(long)2; 
+            d%=1000000007; 
+        }
+        return (int)d; 
+    }
+}

@@ -1,0 +1,99 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        TreeSet<Integer> set1 = new TreeSet<>();
+        TreeSet<Integer> set2 = new TreeSet<>();
+        entry(set1,root1);
+        entry(set2,root2);
+        int arr[] = new int[set1.size()+set2.size()];
+        //int brr[] = new int[set2.size()];
+        List<Integer> list = new ArrayList<>();
+        if(set1.size()==0&&set2.size()==0) {
+
+            return list;
+        }
+        if(set1.size()==0&&set2.size()>0) {
+            for(int a : set2) {
+                list.add(a);
+            }
+            return list;
+        }
+        if(set2.size()==0&&set1.size()>0) {
+            for(int a : set1) {
+                list.add(a);
+            }
+            return list;
+        }
+        int c = 0;
+        for(int a : set1) {
+            arr[c] = a;
+            //System.out.println(arr[c]);
+            c++;
+        }
+        //c = 0;
+        //System.out.println("set2");
+        for(int a : set2) {
+            arr[c] = a;
+            //System.out.println(brr[c]);
+            c++;
+        }
+        c = 0;
+        for(int i = 0; i<arr.length-1; i++) {
+            for(int j = 0; j<arr.length-i-1; j++) {
+                if(arr[j]>arr[j+1]) {
+                    c = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = c;
+                }
+            }
+        }
+        for(int i = 0; i<arr.length; i++)  {
+            list.add(arr[i]);
+        }
+        /*int j = 0, k = 0;
+        for(int i = 0; i<set1.size()+set2.size(); i++) {
+            if(i ==(set1.size()+set2.size())-1) {
+                if(j<set1.size()) {
+                    list.add(arr[j]);
+                }
+                else if(k<set2.size()) {
+                    list.add(brr[k]);
+                }
+                break;
+            }
+            //if(j<set1.size()) {
+                if(j<set1.size()&&k<set2.size()&&arr[j]<brr[k]) {
+                    list.add(arr[j]);
+                    j++;
+                }
+                else if(j<set1.size()&&k<set2.size()&&arr[j]>=brr[k]) {
+                    list.add(brr[k]);
+                    k++;
+                }
+            //}
+        }*/
+        return list;
+    }
+    public void entry(TreeSet<Integer> set, TreeNode root) {
+        if(root==null) {
+            return;
+        }
+        set.add(root.val);
+        entry(set,root.left);
+        entry(set,root.right);
+    }
+}
