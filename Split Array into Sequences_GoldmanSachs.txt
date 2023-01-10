@@ -1,0 +1,38 @@
+class Solution {
+    public boolean isPossible(int[] arr) {
+        HashMap<Integer,Integer> available = new HashMap<>(); 
+        HashMap<Integer,Integer> vacancy = new HashMap<>(); 
+        for(int a : arr) {
+            if(!available.containsKey(a))
+                available.put(a,1); 
+            else 
+                available.replace(a,available.get(a)+1); 
+        }
+        for(int a : arr) {
+            if(available.get(a)==0)
+                continue; 
+            else {
+                if(vacancy.containsKey(a)&&vacancy.get(a)>0) {
+                    vacancy.replace(a,vacancy.get(a)-1); 
+                    if(vacancy.containsKey(a+1))
+                        vacancy.replace(a+1,vacancy.get(a+1)+1);
+                    else 
+                        vacancy.put(a+1,1); 
+               }
+               else {
+                   if((!available.containsKey(a+1)||available.get(a+1)==0)||(!available.containsKey(a+2)||available.get(a+2)==0)) 
+                       return false; 
+                available.replace(a+1,available.get(a+1)-1);
+                                  available.replace(a+2,available.get(a+2)-1);
+                                    if(vacancy.containsKey(a+3))
+                        vacancy.replace(a+3,vacancy.get(a+3)+1);
+                    else 
+                        vacancy.put(a+3,1); 
+                  }
+            }
+            available.replace(a,available.get(a)-1);
+            
+        }
+        return true; 
+    }
+}

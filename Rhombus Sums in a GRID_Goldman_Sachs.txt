@@ -1,0 +1,61 @@
+class Solution {
+    public int[] getBiggestThree(int[][] arr) {
+        ArrayList<Integer> queue = new ArrayList<>(); 
+        int m = arr.length, n = arr[0].length; 
+        TreeSet<Integer> set = new TreeSet<>((a,b) -> b-a); 
+        int a = 0, b = 0, c = 0; 
+        int a1 = 0; 
+        int bis = 0; 
+        for(int i = 0; i<m; i++) {
+            for(int j = 0; j<n; j++) {
+                if(set.add(arr[i][j])) 
+                    queue.add(arr[i][j]); 
+                for(int k = 1; k<=25; k++) {
+                    if(i+(2*k)>=m||j+k>=n||j-k<0) {
+                        continue; 
+                    }
+                    a = i; b = j; c = j; 
+                    a1 = i + (2*k); 
+                    bis = 0; 
+                    for(int l = 0; l<k; l++) {
+                        if(b==c) {
+                            bis+=arr[a][b]; 
+                            bis+=arr[a1][b]; 
+                        }
+                        else {
+                            bis+=arr[a][b]; 
+                            bis+=arr[a1][b]; 
+                            bis+=arr[a][c]; 
+                            bis+=arr[a1][c]; 
+                        }
+                        a++; a1--; b--; c++; 
+                    }
+                    bis+=arr[a][b]; 
+                    bis+=arr[a][c]; 
+                    if(set.add(bis)) 
+                        queue.add(bis); 
+                }
+            }
+        }
+        Collections.sort(queue); 
+        //System.out.println(queue); 
+        // set.clear(); 
+        // while(queue.size()!=0) {
+        //     while(set.size()!=3) {
+        //         set.add(queue.poll()); 
+        //     }
+        //     if(set.size()==3) {
+        //         break; 
+        //     }
+        // }
+        c = queue.size(); 
+        b = Math.min(c,3); 
+        int ans[] = new int[b]; 
+        //c = 0; 
+        for(int i = 0; i<b; i++) {
+            ans[i] = queue.get(c-1); 
+            c--; 
+        }
+        return ans; 
+    }
+}
