@@ -1,0 +1,33 @@
+class Solution {
+    public int findKthNumber(int n, int k) {
+        long cur = 1; 
+        long k1 = k; 
+        k1--; 
+        long step = 0; 
+        while(k1>0) {
+            step = count(n,cur,cur+1); 
+            if(step<=k1) {
+                //System.out.println("THERE "+step+" "+cur); 
+                k1-=step; 
+                cur++;
+            }
+            else {
+                cur*=10; 
+                k1--; 
+                //System.out.println("HERE"); 
+            }
+            //System.out.println(k1); 
+        }
+        return (int)cur; 
+    }
+    public long count(long n, long cur,long cur1) {
+        long step = 0; 
+        while(cur<=n) {
+            step+=(Math.min(n+1,cur1)-cur); 
+            cur*=10; 
+            cur1*=10; 
+        }
+        //System.out.println(cur1+" "+step+" "+cur); 
+        return step; 
+    }
+}

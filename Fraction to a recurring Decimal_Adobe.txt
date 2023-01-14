@@ -1,0 +1,63 @@
+class Solution {
+    public String fractionToDecimal(int n, int d) {
+        /*if(n%d==0) {
+            return (n/d) + ""; 
+        }
+        String s = "", x = ""; 
+        s = (n<0&&d<0)||(n>0&&d>0)?"":"-"; 
+        if(n%d==0) {
+            s = s + (n/d) + ""; 
+            return s; 
+        }*/
+        
+        // s = s + (n/d) + "."; 
+        //n = n%d; 
+        HashMap<Long,Integer> map = new HashMap<>(); 
+        long n1 = Math.abs((long)n), d1 = Math.abs((long)d), h = 0; 
+        // if(n1%d1==0) {
+        //     return (n1/d1) + ""; 
+        // }
+        String s = "", x = ""; 
+        s = (n<0&&d<0)||(n>0&&d>0)||n==0?"":"-"; 
+        //System.out.println((n<0&&d<0)||(n>0&&d>0)); 
+        if(n1%d1==0) {
+            s = s + (n1/d1) + ""; 
+            return s; 
+        }
+        s = s + (n1/d1) + "."; 
+        n1%=d1; 
+        int c = 0; 
+        int f = 0; 
+        //System.out.println(s+" "+n1+" "+d1); 
+        while(n1!=0) {
+            if(map.containsKey(n1)) {
+                f = map.get(n1); 
+                //System.out.println(x.substring(0,f)); 
+                return s+(x.substring(0,f))+"("+(x.substring(f,c))+")"; 
+            }
+            map.put(n1,c); 
+            n1*=10; 
+            x+=(n1/d1); 
+            c++; 
+            n1 = n1%d1; 
+        }
+        return s+x; 
+    }
+}
+
+/*int c = 0, bis = 0; 
+        map.put(n,c); 
+        c++; 
+        String x = ""; 
+        while(n!=0) {
+            map.put(n%d,c); 
+            c++; 
+            if(map.containsKey(n)) {
+                bis = map.get(n); 
+                return s+(x.substring(0,bis))+"("+(x.substring(bis,c-1))+")"; 
+            }
+            n*=10; 
+            x+=(n/d);
+            n%=d; 
+        }
+        return s + x; */ 

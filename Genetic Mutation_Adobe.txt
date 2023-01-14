@@ -1,0 +1,56 @@
+class Solution {
+    public int minMutation(String start, String end, String[] bank) {
+        HashSet<String> set = new HashSet<>(); 
+        for(String x : bank) {
+            set.add(x); 
+        }
+        set.add(start); 
+        ArrayList<String> bfs = new ArrayList<>(); 
+        int c = 0; 
+        bfs.add(start); 
+        int n = 1; 
+        int d = 0; 
+        String s = "", x = ""; 
+        boolean r = true; 
+        //int io = -1; 
+        HashSet<String> set2 = new HashSet<>(); 
+        char arr[] = {'A', 'C', 'G', 'T'}; 
+        //System.out.println(set); 
+        while(n!=0) {
+            d = 0; 
+            for(int j = 0; j<n; j++) {
+                s = bfs.get(0); 
+                bfs.remove(0); 
+                //System.out.println(s); 
+                if(!set.contains(s)) {
+                    continue; 
+                }
+                // if(set2.contains(s)) {
+                //     continue; 
+                // }
+                if(s.compareTo(end)==0) {
+                    return c; 
+                }
+                r = true; 
+                for(int i = 0; i<8; i++) {
+                    for(char bis : arr) {
+                        if(bis == s.charAt(i)) {
+                            continue; 
+                        }
+                        x = s.substring(0,i) + bis + s.substring(i+1,8); 
+                        if(!set2.contains(x)) {
+                            bfs.add(x); 
+                            set2.add(x); 
+                            d++; 
+                        }
+                    }
+                    // System.out.println(set2); 
+                }
+            }
+            //System.out.println(bfs); 
+            c++; 
+            n = d; 
+        }
+        return -1; 
+    }
+}

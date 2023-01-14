@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int ans; 
+    public int averageOfSubtree(TreeNode root) {
+        ans = 0; 
+        TreeNode hdr = new TreeNode(); 
+        trav(root, hdr); 
+        dp(root, hdr); 
+        return ans; 
+    }
+    public int dp(TreeNode root, TreeNode hdr) {
+        // if(ans!=-1)  {
+        //     //System.out.println(root.val+" "+hdr.val); 
+        //     return; 
+        // }
+        //System.out.println(root.val+" "+hdr.val); 
+        if(root==null) {
+            //System.out.println(root.val+" "+hdr.val+" "); 
+            return 0; 
+        }
+        int c = root.val + dp(root.left, hdr.left) + dp(root.right, hdr.right); 
+        //System.out.println(root.val+" "+hdr.val+" "+c); 
+        if(c/hdr.val==root.val) {
+            //System.out.println(root.val+" h "+hdr.val+" "+c); 
+            ans++; 
+        }
+        return c; 
+    }
+    public int trav(TreeNode root, TreeNode hdr) {
+        if(root==null) {
+            return 0; 
+        }
+        int c = 1; 
+        if(root.left!=null) {
+            hdr.left = new TreeNode(); 
+            c+=trav(root.left, hdr.left); 
+        }
+        if(root.right!=null) {
+            hdr.right = new TreeNode(); 
+            c+=trav(root.right, hdr.right); 
+        }
+        hdr.val = c; 
+        return c; 
+    }
+}

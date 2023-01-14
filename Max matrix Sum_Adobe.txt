@@ -1,0 +1,24 @@
+class Solution {
+    public long maxMatrixSum(int[][] arr) {
+        int min = 1000000; 
+        int c = 0; 
+        long sum = 0; 
+        int n = arr.length; 
+        for(int i = 0; i<n; i++) {
+            for(int j = 0; j<n; j++) {
+                sum+=(long)Math.abs(arr[i][j]); 
+                //System.out.println(i+" "+j+" "+sum); 
+                if(arr[i][j]<0) {
+                    c++; 
+                }
+                min = Math.min(min,Math.abs(arr[i][j])); 
+            }
+        }
+        if(c%2==0) {
+            return sum; 
+        }
+        else {
+            return sum - (2*min); 
+        }
+    }
+}

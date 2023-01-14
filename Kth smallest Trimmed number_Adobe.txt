@@ -1,0 +1,18 @@
+class Solution {
+    public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
+        int n = queries.length; 
+        int ans[] = new int[n]; 
+        ArrayList<Integer> list = new ArrayList<>(); 
+        int m = nums[0].length(); 
+        for(int i = 0; i<nums.length; i++) {
+            list.add(i); 
+        } 
+        int c = 0; 
+        for(int arr[] : queries) {
+            Collections.sort(list,(a,b) -> nums[a].substring(m-arr[1],m).compareTo(nums[b].substring(m-arr[1],m))==0?a-b:nums[a].substring(m-arr[1],m).compareTo(nums[b].substring(m-arr[1],m))); 
+            ans[c] = list.get(arr[0]-1); 
+            c++; 
+        }
+        return ans; 
+    }
+}
