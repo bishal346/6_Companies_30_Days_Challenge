@@ -1,0 +1,40 @@
+class Solution {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int sum = 0; 
+        Arrays.sort(nums); 
+        for(int a : nums) {
+            sum+=a; 
+        }
+        if(sum%k!=0) {
+            return false; 
+        }
+        int n = nums.length; 
+        boolean brr[] = new boolean[n]; 
+        return trav(nums,k,brr,0,sum/k,0,n); 
+    }
+    public boolean trav(int arr[], int k, boolean brr[], int cur, int c, int i, int n) {
+        //System.out.println(cur+" "+k); 
+        if(cur>c) {
+            //System.out.println(cur+" "+k+" "); 
+            return false; 
+        }
+        if(k==0) {
+            return true; 
+        }
+        if(cur==c) {
+            //System.out.println(cur); 
+            return trav(arr,k-1,brr,0,c,0,n); 
+        }
+        for(int j = i; j<n; j++) {
+            if(brr[j]) 
+                continue; 
+            brr[j] = true; 
+            if(trav(arr,k,brr,cur+arr[j],c,j+1,n)) {
+                //System.out.println(cur+" "+k+" "+c+" "+j+" "+arr[j]); 
+                return true; 
+            }
+            brr[j] = false; 
+        }
+        return false; 
+    }
+}

@@ -1,0 +1,44 @@
+class Solution {
+    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int arr[][] = new int[n][n]; 
+        int x = Integer.MAX_VALUE; 
+        for(int i = 0; i<n; i++) {
+            for(int j = 0; j<n; j++) {
+                if(i!=j) {
+                    arr[i][j] = x; 
+                }
+            }
+        }
+        for(int brr[] : edges) {
+            arr[brr[0]][brr[1]] = brr[2]; 
+            arr[brr[1]][brr[0]] = brr[2]; 
+        }
+        for(int i = 0; i<n; i++) {
+            for(int j = 0; j<n; j++) {
+                for(int k = 0; k<n; k++) {
+                    if(j==i||k==i||arr[j][i]==x||arr[i][k]==x) {
+                        continue; 
+                    }
+                    arr[j][k] = Math.min(arr[j][k],arr[j][i]+arr[i][k]); 
+                    //arr[j][i] = arr[i][j]; 
+                }
+            }
+        }
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE; 
+        int c = 0; 
+        for(int i = 0; i<n; i++) { 
+            c = 0; 
+            for(int j = 0; j<n; j++) {
+                //if(i==j||arr[i][j]==c) continue; 
+                if(i!=j&&arr[i][j]<=distanceThreshold) {
+                    c++; 
+                }
+            }
+            if(c<=min) {
+                min = c; 
+                max = i; 
+            }
+        }
+        return max; 
+    }
+}

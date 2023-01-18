@@ -1,0 +1,24 @@
+class Solution {
+    public double new21Game(int n, int k, int maxPts) {
+        if(k==0||n>=k+maxPts) {
+            return 1.0; 
+        }
+        double arr[] = new double[n+1]; 
+        arr[0] = 1.0; 
+        double sliding =arr[0]; 
+        double ans = 0.0; 
+        for(int i = 1; i<=n; i++) {
+            arr[i] = sliding/(double)maxPts; 
+            if(i<=k-1) {
+                sliding+=arr[i]; 
+            }
+            else {
+                ans+=arr[i]; 
+            }
+            if(i-maxPts>=0) {
+                sliding-=arr[i-maxPts]; 
+            }
+        }
+        return ans; 
+    }
+}

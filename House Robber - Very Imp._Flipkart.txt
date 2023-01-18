@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int rob(TreeNode root) {
+        TreeNode t = new TreeNode(-1); 
+        dp_arr(t,root); 
+        return rob(root,t); 
+    }
+    public int rob(TreeNode root, TreeNode t) {
+        if(root==null||t==null) {
+            return 0;
+        }
+        if(t.val!=-1) {
+            return t.val; 
+        }
+        int a = root.val,b = 0;
+        if(root.left!=null) {
+            a = a + rob(root.left.left,t.left.left)+rob(root.left.right,t.left.right);
+        }
+        if(root.right!=null)  {
+            a = a +rob(root.right.right,t.right.right)+rob(root.right.left,t.right.left);
+        }
+        t.val = Math.max(a,(rob(root.left,t.left)+rob(root.right,t.right))); 
+        return t.val; 
+    }
+    public void dp_arr(TreeNode h, TreeNode root) {
+        if(root==null) {
+            return; 
+        }
+        if(root.left!=null) {
+            h.left = new TreeNode(-1); 
+            dp_arr(h.left,root.left); 
+        }
+        if(root.right!=null) {
+            h.right = new TreeNode(-1); 
+            dp_arr(h.right,root.right); 
+        }
+    }
+}
+
+/*if(root==null) {
+            return 0;
+        }
+        int a = root.val,b = 0;
+        if(root.left!=null) {
+            a = a + rob(root.left.left)+rob(root.left.right);
+        }
+        if(root.right!=null)  {
+            a = a +rob(root.right.right)+rob(root.right.left);
+        }
+        return Math.max(a,(rob(root.left)+rob(root.right)));*/ 

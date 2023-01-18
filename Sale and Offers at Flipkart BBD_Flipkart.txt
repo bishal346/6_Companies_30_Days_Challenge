@@ -1,0 +1,41 @@
+class Solution {
+    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+        //int arr[][] = new int[10000][10000]; 
+        int n = price.size(),  m = special.size(); 
+        HashMap<String, Integer> arr[] = new HashMap[m]; 
+        for(int i = 0; i<m; i++) {
+            arr[i] = new HashMap<>(); 
+        }
+        return dp(0,arr,special,price,needs,n,new int[n],m); 
+    }
+    public int dp(int i, HashMap<String, Integer> arr[], List<List<Integer>> list, List<Integer> price, List<Integer> needs, int n, int brr[], int m) {
+        String s = ""; 
+        for(int j = 0; j<n; j++) {
+            if(brr[j]>needs.get(j)) {
+                return 9999999; 
+            }
+            s+=brr[j]; 
+        }
+        if(i>=m) {
+            int bis = 0; 
+            for(int j = 0; j<n; j++) {
+                bis+=(price.get(j)*(needs.get(j)-brr[j])); 
+            }
+            return bis; 
+        }
+        if(arr[i].containsKey(s)) {
+            return arr[i].get(s); 
+        }
+        int a = Math.min(dp(i+1,arr,list,price,needs,n,brr,m),dp(i+1,arr,list,price,needs,n,brr,m)); 
+        for(int j = 0; j<n; j++) {
+            brr[j]+=list.get(i).get(j); 
+        }
+       
+        a = Math.min(a,list.get(i).get(n)+ Math.min(dp(i+1,arr,list,price,needs,n,brr,m),dp(i,arr,list,price,needs,n,brr,m))); 
+        for(int j = 0; j<n; j++) {
+            brr[j]-=list.get(i).get(j); 
+        }
+        arr[i].put(s,a); 
+        return arr[i].get(s); 
+    }
+}
