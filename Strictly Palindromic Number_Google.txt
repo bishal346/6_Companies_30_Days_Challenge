@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isStrictlyPalindromic(int n) {
+        int x = 0; 
+        int ans = 0; 
+        String s = "", t = ""; 
+        for(int i = 2; i<n-1; i++) {
+            x = n; 
+            s = ""; 
+            t = ""; 
+            while(x!=0) {
+                s = s + (x%i); 
+                t = (x%i) + t; 
+                x = x/i; 
+            }
+            //System.out.println(i+" "+s+" "+t); 
+            if(s.compareTo(t)!=0) {
+                return false; 
+            }
+        }
+        return true; 
+    }
+}

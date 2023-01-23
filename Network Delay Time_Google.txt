@@ -1,0 +1,51 @@
+//BY USING DIKSTRA ALGORITHM
+class Solution {
+    public int networkDelayTime(int[][] times, int n, int k) {
+        int arr[] = new int[n+1]; 
+        int point[] = new int[n+1]; 
+        HashMap<Integer,Integer> brr[] = new HashMap[n+1]; 
+        for(int i = 0; i<=n; i++) {
+            arr[i] = Integer.MAX_VALUE; 
+            brr[i] = new HashMap<>(); 
+        }
+        for(int crr[] : times) {
+            brr[crr[0]].put(crr[1],crr[2]); 
+            //System.out.println(crr[0]+"    "+brr[crr[0]]); 
+        }
+        HashSet<Integer> set = new HashSet<>(); 
+        set.add(k); 
+        int min = Integer.MAX_VALUE; 
+        //point[k] = -1; 
+        arr[k] = 0; 
+        int minx = 0; 
+        while(set.size()!=0) {
+            //System.out.println(set); 
+            minx = Integer.MAX_VALUE; 
+            for(int s : set) {
+                if(arr[s]<minx) {
+                    minx = arr[s]; 
+                    min = s; 
+                }
+                //min = Math.min(min,s); 
+            }
+            set.remove(min); 
+            point[min] = -1; 
+            for(int f : brr[min].keySet()) {
+                if(point[f]!=-1) {
+                    arr[f] = Math.min(arr[f],arr[min]+brr[min].get(f)); 
+                    set.add(f); 
+                }
+            }
+            //System.out.println("INTRE "+set); 
+        }
+        min = 0; 
+        for(int i = 1; i<=n; i++) {
+            System.out.println(i+"    "+brr[i]+" "+arr[i]); 
+            if(point[i]!=-1) {
+                return -1; 
+            }
+            min = Math.max(min,arr[i]); 
+        }
+        return min; 
+    }
+}

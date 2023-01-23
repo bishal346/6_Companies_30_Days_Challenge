@@ -1,0 +1,48 @@
+class Solution {
+    public int closedIsland(int[][] arr) {
+        int c = 0;
+        /*for(int i = 0; i<arr.length; i++) {
+            dp(arr,i,0); 
+            dp(arr,i,arr[0].length-1); 
+        }
+        for(int i = 0; i<arr[0].length; i++) {
+            dp(arr,0,i); 
+            dp(arr,arr.length-1,i); 
+        }
+        for(int a[] : arr) {
+            for(int d : a){
+                System.out.print(d+" ");
+            }
+            System.out.println();
+        }*/
+        for(int i = 0; i<arr.length; i++) {
+            for(int j = 0; j<=arr[0].length-1; j++) {
+                if(arr[i][j]==0) {
+                    if(dp(arr,i,j)) {
+                        //System.out.println(i+" "+j); 
+                        c++;
+                    }
+                }
+            }
+        }
+        /*for(int a[] : arr) {
+            for(int d : a){
+                System.out.print(d+" ");
+            }
+            System.out.println();
+        }*/
+        return c;
+    }
+    public boolean dp(int arr[][], int i, int j) {
+        if(i<0||i>=arr.length||j<0||j>=arr[0].length) {
+            return false;
+        }
+        if(arr[i][j]==1) {
+            return true;
+        }
+        arr[i][j] = 1;
+        boolean a = dp(arr,i+1,j), b = dp(arr,i-1,j), c = dp(arr,i,j+1), d = dp(arr,i,j-1);
+        return a&&b&&c&&d; 
+    }
+    
+}

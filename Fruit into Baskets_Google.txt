@@ -1,0 +1,27 @@
+class Solution {
+    public int totalFruit(int[] tree) {
+        HashMap<Integer,Integer> map = new HashMap<>(); 
+        int a = -1; 
+        int max = 0; 
+        for(int i = 0; i<tree.length; i++) {
+            if(!map.containsKey(tree[i])) {
+                map.put(tree[i],i); 
+            }
+            else {
+                map.replace(tree[i],i); 
+            }
+            if(map.size()>2) {
+                a = 999999; 
+                //int g = -1; 
+                for(int f : map.keySet()) {
+                    a = Math.min(a,map.get(f)); 
+                }
+                map.remove(tree[a]); 
+                //map.put(tree[i],1); 
+            }
+            //System.out.println(i+" "+a); 
+            max = Math.max(max,(i-a)); 
+        }
+        return max; 
+    }
+}

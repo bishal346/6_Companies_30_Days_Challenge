@@ -1,0 +1,35 @@
+class Solution {
+    public List<String> restoreIpAddresses(String s) { 
+        List<String> list = new ArrayList<>(); 
+        trav(list,s,1,"",s.charAt(0)-'0',0); 
+        return list; 
+    }
+    public void trav(List<String> list, String s, int i, String x, int y, int c) {
+        if(c>=4) {
+            return; 
+        }
+        if(i>=s.length()) {
+            if(y>255) {
+                return; 
+            }
+            if(c<3) {
+                return; 
+            }
+            else {
+                x = x+"."+y; 
+                list.add(x.substring(1,x.length())); 
+                return; 
+            }
+        }
+        if(y>255) {
+            return; 
+        }
+        else if(y==255||y==0) {
+            trav(list,s,i+1,x+"."+y,s.charAt(i)-'0',c+1); 
+        }
+        else {
+            trav(list,s,i+1,x,(y*10)+(s.charAt(i)-'0'),c); 
+            trav(list,s,i+1,x+"."+y,s.charAt(i)-'0',c+1); 
+        }
+    }
+}

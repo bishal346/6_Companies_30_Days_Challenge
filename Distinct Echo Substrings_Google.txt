@@ -1,0 +1,26 @@
+class Solution {
+    public int distinctEchoSubstrings(String s) {
+        int c = 0; 
+        int n = s.length(); 
+        String x = ""; 
+        HashSet<String> set = new HashSet<>(); 
+        for(int i = 0; i<n; i++) {
+            c = 0; 
+            for(int j = i+1; j<n; j++) { 
+                c++; 
+                if(s.charAt(i)!=s.charAt(j)) {
+                    continue; 
+                }
+                if(j+c>n) {
+                    break; 
+                }
+                x = s.substring(i,j); 
+                //System.out.println(x+" "+i+" "+j+" "+c); 
+                if(x.compareTo(s.substring(j,j+c))==0) {
+                    set.add(x); 
+                }
+            }
+        }
+        return set.size(); 
+    }
+}
