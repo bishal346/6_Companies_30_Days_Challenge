@@ -1,0 +1,95 @@
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        HashSet<String> set = new HashSet<>();
+        for(int i = 0; i<words.length; i++) {
+            set.add(words[i]);
+        }
+        int n = set.size();
+        String arr[] = new String[n];
+        int brr[] = new int[n];
+        int c = 0;
+        int a = 0;
+        for(String x : set) {
+            c = 0;
+            for(int i = 0; i<words.length; i++) {
+                if(x.compareTo(words[i])==0) {
+                    c++;
+                }
+            }
+            arr[a] = x;
+            brr[a] = c;
+            a++;
+        }
+        String x = "";
+        for(int i = 0; i<n-1; i++) {
+            for(int j = 0; j<n-1-i; j++) {
+                if(brr[j]<brr[j+1]) {
+                    c = brr[j+1];
+                    brr[j+1] = brr[j];
+                    brr[j] = c;
+                    x = arr[j+1];
+                    arr[j+1] = arr[j];
+                    arr[j] = x;
+                }
+            }
+        }
+        List<String> list = new ArrayList<>();
+        TreeSet<String> tet = new TreeSet<>();
+        int bbii = 0;
+        int i = 0;
+        while(bbii<k) {
+            tet.clear();
+            tet.add(arr[i]);
+            for(i = i+1; i<brr.length; i++) {
+                if(brr[i]==brr[i-1]) {
+                    tet.add(arr[i]);
+                }
+                else {
+                    break;
+                }
+            }
+            for(String gf : tet) {
+                list.add(gf);
+                bbii++;
+                if(bbii==k) {
+                    return list;
+                }
+            }
+            //list.add(arr[i]);
+        }
+        return list;
+        /*int n = set.size();
+        String sub[] = new String[n];
+        int fre[] = new int[n];
+        int c = 0, d = 0;
+        for(String a : set) {
+            sub[d] = a;
+            c = 0;
+            for(int j = 0; j<words.length; j++) {
+                if(a.compareTo(words[j])==0){
+                    c++;
+                }
+            }
+            fre[d] = c;
+            d++;
+        }
+        String bis = "";
+        for(int i = 0; i<n-1; i++){
+            for(int j = 0; j<n-i-1; j++) {
+                if(fre[j]<fre[j+1]) {
+                    c = fre[j];
+                    fre[j] = fre[j+1];
+                    fre[j+1] = c;
+                    bis = sub[j];
+                    sub[j] = sub[j+1];
+                    sub[j+1] = bis;
+                }
+            }
+        }
+        List<String> list = new ArrayList<>();
+        for(int i = 0; i<k; i++) {
+            list.add(sub[i]);
+        }
+        return list;*/
+    }
+}

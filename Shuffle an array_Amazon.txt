@@ -1,0 +1,43 @@
+class Solution {
+    int arr[]; 
+    int brr[]; 
+    int n; 
+    Random random; 
+    public Solution(int[] nums) {
+        n = nums.length; 
+        arr = nums; 
+        random = new Random();
+        brr = new int[n]; 
+        for(int i = 0; i<n; i++)
+            brr[i] = arr[i]; 
+    }
+    
+    public int[] reset() {
+        /*for(int i = 0; i<n; i++)
+            arr[i] = brr[i];*/
+        return brr; 
+    }
+    
+    public int[] shuffle() {
+        if(n==1)
+            return arr; 
+        int x = -1, a = 0; 
+        for(int i = 0; i<n; i++) {
+            x = random.nextInt(i+1); 
+            a = arr[x];
+            arr[x] = arr[i]; 
+            arr[i] = a; 
+        }
+        /*int a = arr[0];
+        arr[0] = arr[1]; 
+        arr[1] = a;*/ 
+        return arr; 
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(nums);
+ * int[] param_1 = obj.reset();
+ * int[] param_2 = obj.shuffle();
+ */

@@ -1,0 +1,67 @@
+class Solution {
+    public int maxSumMinProduct(int[] arr) {
+        Stack<Integer> left = new Stack<>(); 
+        Stack<Integer> right = new Stack<>(); 
+        int n = arr.length; 
+        int l[] = new int[n]; 
+        int r[] = new int[n]; 
+        //int n = arr.length; 
+        for(int i = 0; i<n; i++) {
+            /*if(left.size()==0)
+                left.add(i);*/ 
+            //else {
+                while(left.size()!=0&&arr[left.peek()]>=arr[i]) {
+                    left.pop(); 
+                }
+            if(left.size()==0) {
+                l[i] = -1; 
+                left.push(i); 
+                //System.out.println(left); 
+                continue; 
+            }
+            l[i] = left.peek(); 
+                left.push(i); 
+            //l[i] = left.peek(); 
+            //System.out.println(left); 
+            //}
+        }
+        for(int i = n-1; i>=0; i--) {
+            /*if(left.size()==0)
+                left.add(i);*/ 
+            //else {
+                while(right.size()!=0&&arr[right.peek()]>=arr[i]) {
+                    right.pop(); 
+                }
+            if(right.size()==0) {
+                r[i] = n; 
+                right.push(i); 
+                continue; 
+            }
+            r[i] = right.peek(); 
+                right.push(i); 
+            //r[i] = right.peek(); 
+            //}
+        }
+        /*for(int i = 0; i<n; i++)
+            System.out.println(l[i]+" "+r[i]+" "+brr[i]);*/ 
+        long max = 0; 
+        long brr[] = new long[n]; 
+        brr[0] = arr[0]; 
+        for(int i = 1; i<n; i++) {
+            brr[i] = brr[i-1] + arr[i]; 
+        }
+        //for(int i = 0; i<n; i++)
+            //System.out.println(l[i]+" "+r[i]+" "+brr[i]); 
+        long a = 0; 
+        for(int i = 0; i<n; i++) {
+            a = brr[r[i]-1]; 
+            if(l[i]!=-1)
+                a-=brr[l[i]];
+            //a = a%1000000007; 
+            a*=arr[i]; 
+            //a = a%1000000007; 
+            max = Math.max(max,a); 
+        }
+        return (int)(max%1000000007); 
+    }
+}

@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<String>> mostPopularCreator(String[] c, String[] ir, int[] v) {
+        HashMap<String, HashMap<String, Long>> map = new HashMap<>(); 
+        HashMap<String, Long> map1 = new HashMap<>(); 
+        int n = c.length; 
+        long max = -1; 
+        for(int i = 0; i<n; i++) {
+            if(!map.containsKey(c[i])) {
+                map.put(c[i], new HashMap<>()); 
+                map1.put(c[i],(long)0); 
+            }
+            map.get(c[i]).put(ir[i],(long)v[i]); 
+            map1.replace(c[i],map1.get(c[i])+(long)v[i]); 
+            max = Math.max(max,map1.get(c[i])); 
+        }
+        List<List<String>> list = new ArrayList<>(); 
+        long max1 = -1; 
+        String a = ""; 
+        //System.out.println(map+" "+map1); 
+        for(String b : map1.keySet()) {
+            if(map1.get(b)<max)
+                continue; 
+            List<String> lst = new ArrayList<>(); 
+            lst.add(b); 
+            max1 = -1; 
+            a = ""; 
+            //System.out.print
+            for(String x : map.get(b).keySet()) {
+                if(map.get(b).get(x)>max1) {
+                    max1 = map.get(b).get(x); 
+                    
+                    a = x; 
+                }
+                if(map.get(b).get(x)==max1) 
+                    a = x.compareTo(a)<0?x:a; 
+            }
+            lst.add(a); 
+            list.add(lst); 
+        }
+        return list; 
+    }
+}

@@ -1,0 +1,30 @@
+class Solution {
+    public int maxUniqueSplit(String s) {
+        Stack<String> stack = new Stack<>(); 
+        return bt(s,1,""+s.charAt(0),stack); 
+    }
+    public int bt(String s, int i, String x, Stack<String> stack) {
+        if(i>=s.length()) {
+            if(x!="") {
+                if(stack.contains(x)) {
+                    return 0; 
+                }
+                stack.add(x); 
+            }
+            int m = stack.size(); 
+            stack.pop(); 
+            return m; 
+        }
+        int max = 0; 
+        if(stack.contains(x)) {
+            max = Math.max(max,bt(s,i+1,x+s.charAt(i),stack)); 
+        }
+        else {
+            max = Math.max(max,bt(s,i+1,x+s.charAt(i),stack)); 
+            stack.add(x); 
+            max = Math.max(max,bt(s,i+1,""+s.charAt(i),stack)); 
+            stack.pop(); 
+        }
+        return max; 
+    }
+}

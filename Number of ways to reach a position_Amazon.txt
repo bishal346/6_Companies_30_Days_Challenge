@@ -1,0 +1,25 @@
+class Solution {
+    public int numberOfWays(int startPos, int endPos, int k) {
+        long arr[][] = new long[3000][k+1]; 
+        for(int i = 0; i<3000; i++) {
+            for(int j = 0; j<=k; j++) {
+                arr[i][j] = (long)-1; 
+            }
+        }
+        return (int)(dp(startPos,0,arr,k,endPos)%(long)1000000007); 
+    }
+    public long dp(int i, int c, long arr[][], int k, int n) {
+        if(c>=k) {
+            //System.out.println(i); 
+            return i==n?1:0; 
+        }
+        // if(i==k) {
+        //     return c==k?1:0; 
+        // }
+        if(arr[i+1000][c]!=(long)-1) {
+            return arr[i+1000][c]; 
+        }
+        arr[i+1000][c] = ((dp(i+1,c+1,arr,k,n)%(long)1000000007) + (dp(i-1,c+1,arr,k,n)%(long)1000000007))%(long)1000000007; 
+        return arr[i+1000][c]; 
+    }
+}
