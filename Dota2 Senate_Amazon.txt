@@ -1,0 +1,27 @@
+class Solution {
+    public String predictPartyVictory(String s) {
+        Queue<Integer> r = new LinkedList<>(); 
+        Queue<Integer> d = new LinkedList<>(); 
+        int n = s.length(); 
+        for(int i = 0; i<n; i++) {
+            if(s.charAt(i)=='R') {
+                r.add(i); 
+            }
+            else {
+                d.add(i); 
+            }
+        }
+        int x = 0, y = 0; 
+        while(r.size()!=0&&d.size()!=0) {
+            x = r.poll(); 
+            y = d.poll(); 
+            if(x<y) {
+                r.add(x+n); 
+            }
+            else {
+                d.add(y+n); 
+            }
+        }
+        return r.size()>d.size()?"Radiant":"Dire"; 
+    }
+}
